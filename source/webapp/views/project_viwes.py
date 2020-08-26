@@ -1,10 +1,10 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.http import urlencode
 from webapp.models import Project, Task
-from django.views.generic import TemplateView, FormView, ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from webapp.forms import SimpleSearchForm, ProjectForm, TaskForm, ProjectTaskForm
 
 
@@ -68,4 +68,10 @@ class ProjectTaskCreateView(CreateView):
         task.save()
         form.save_m2m()
         return redirect('project_view', pk=project.pk)
+
+
+class ProjectDeleteView(DeleteView):
+    template_name = 'project/project_delete.html'
+    model = Project
+    success_url = reverse_lazy('project_index')
 
