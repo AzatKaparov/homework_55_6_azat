@@ -29,6 +29,6 @@
     <p class="date">Дата окончания: {{ project.end_date }}</p>
     <a class="btn btn-primary" href="{% url 'create_task_project' project.pk %}">Добавить задачу в проект</a>
     <p class="mt-5"></p><a class="delete-button ml-5 px-3 mb-4" href="{% url 'project_delete' project.pk %}">Удалить</a><br/>
-{#    <a class="update-button ml-5 px-3 mb-4" href="{% url 'update' task.pk %}">Обновить</a><br/>#}
+    <a class="update-button ml-5 px-3 mb-4" href="{% url 'project_update' project.pk %}">Обновить</a><br/>
     <a class="back-button ml-5 px-3 mb-4" href="{% url 'project_index' %}">Назад</a></p>
 {% endblock %}

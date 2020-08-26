@@ -75,3 +75,12 @@ class ProjectDeleteView(DeleteView):
     model = Project
     success_url = reverse_lazy('project_index')
 
+
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'project/project_update.html'
+
+    def get_success_url(self):
+        return reverse('project_view', kwargs={'pk': self.object.pk})
+
