@@ -1,4 +1,4 @@
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.urls import reverse, reverse_lazy
@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, FormView, ListView, DeleteView, U
 from webapp.forms import TaskForm, SimpleSearchForm
 
 
-class TaskIndexView(ListView):
+class TaskIndexView(LoginRequiredMixin, ListView):
     template_name = 'task/index.html'
     context_object_name = 'tasks'
     model = Task
@@ -43,7 +43,7 @@ class TaskIndexView(ListView):
         return None
 
 
-class TaskView(TemplateView):
+class TaskView(LoginRequiredMixin, TemplateView):
     template_name = 'task/task_view.html'
 
     def get_context_data(self, **kwargs):
@@ -54,7 +54,7 @@ class TaskView(TemplateView):
         return context
 
 
-class TaskCreateView(FormView):
+class TaskCreateView(LoginRequiredMixin, FormView):
     template_name = 'task/task_create.html'
     form_class = TaskForm
 
@@ -69,13 +69,13 @@ class TaskCreateView(FormView):
         return reverse('view', kwargs={'pk': self.task.pk})
 
 
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'task/task_delete.html'
     model = Task
     success_url = reverse_lazy('index')
 
 
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'task/task_update.html'
     form_class = TaskForm
     model = Task

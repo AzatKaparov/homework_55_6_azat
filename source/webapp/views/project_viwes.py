@@ -1,4 +1,4 @@
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.urls import reverse, reverse_lazy
@@ -8,7 +8,7 @@ from django.views.generic import ListView, DetailView, CreateView, DeleteView, U
 from webapp.forms import SimpleSearchForm, ProjectForm, TaskForm, ProjectTaskForm
 
 
-class ProjectIndexView(ListView):
+class ProjectIndexView(LoginRequiredMixin, ListView):
     template_name = 'project/index.html'
     context_object_name = 'projects'
     model = Project
@@ -42,12 +42,12 @@ class ProjectIndexView(ListView):
         return None
 
 
-class ProjectView(DetailView):
+class ProjectView(LoginRequiredMixin, DetailView):
     template_name = 'project/project_view.html'
     model = Project
 
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
     form_class = ProjectForm
     template_name = 'project/project_create.html'
@@ -56,7 +56,7 @@ class ProjectCreateView(CreateView):
         return reverse('project_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectTaskCreateView(CreateView):
+class ProjectTaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     template_name = 'project/task_in_project_create.html'
     form_class = ProjectTaskForm

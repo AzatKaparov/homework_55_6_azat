@@ -28,15 +28,25 @@
     <li class="nav-item active">
         <a class="nav-link" href="{% url 'project_index' %}">Список проектов</a>
       </li>
+    {% if user.is_authenticated %}
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'create' %}">Добавить задачу</a>
       </li>
     <li class="nav-item active">
         <a class="nav-link" href="{% url 'project_create'%}">Добавить проект</a>
       </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'logout'%}">Выход</a>
+      </li>
+    {% else %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'login'%}">Вход</a>
+        </li>
+    {% endif %}
         {% block menu %}{% endblock %}
     </ul>
 
+  {% if user.is_authenticated %}
 <form class="text-center" action="" method="GET">
     <label class="mx-2" id="label-search" for="{{ form.search.id_for_label }}">{{ form.search.label }}:</label>
     {{ form.search }}
@@ -45,7 +55,7 @@
         <p class="form-error">{{ error }}</p>
     {% endfor %}
 </form>
-
+  {% endif %}
   </div>
 </nav>
 <div class="container">
