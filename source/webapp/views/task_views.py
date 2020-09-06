@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.urls import reverse, reverse_lazy
 from django.utils.http import urlencode
@@ -63,16 +63,16 @@ class TaskCreateView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
     def get_redirect_url(self):
-        return reverse('view', kwargs={'pk': self.task.pk})
+        return reverse('webapp:view', kwargs={'pk': self.task.pk})
 
     def get_success_url(self):
-        return reverse('view', kwargs={'pk': self.task.pk})
+        return reverse('webapp:view', kwargs={'pk': self.task.pk})
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'task/task_delete.html'
     model = Task
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('webapp:index')
 
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
@@ -81,4 +81,4 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
 
     def get_success_url(self):
-        return reverse('view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:view', kwargs={'pk': self.object.pk})
